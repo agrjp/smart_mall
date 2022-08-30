@@ -1,0 +1,1 @@
+typedef OnClickListener = Function(int index); //点击的接口回调
