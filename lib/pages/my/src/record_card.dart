@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:smart_mall/pages/my/src/want_screen.dart';
 
 class RecordCard extends StatefulWidget {
   const RecordCard({Key? key}) : super(key: key);
@@ -20,11 +21,19 @@ class _RecordCardState extends State<RecordCard> {
           children: [
             Row(
               children: [
-                const Expanded(
-                    child: RecordCardItem(
-                  svgPath: "assets/svg/svg_collection.svg",
-                  label: "想要",
-                  count: 19,
+                Expanded(
+                    child: GestureDetector(
+                  child: const RecordCardItem(
+                    svgPath: "assets/svg/svg_collection.svg",
+                    label: "想要",
+                    count: 19,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => const WantScreen())));
+                  },
                 )),
                 Container(
                   width: 1,

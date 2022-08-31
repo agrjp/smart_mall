@@ -72,6 +72,7 @@ class _RecommendDetailsScreenState extends State<RecommendDetailsScreen> {
                                     _list[index],
                                     width: double.infinity,
                                     height: double.infinity,
+                                    fit: BoxFit.fill,
                                   ),
                                   onIndexChanged: (value) {
                                     setState(() {
