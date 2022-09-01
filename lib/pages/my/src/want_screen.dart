@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smart_mall/constants/theme.dart';
-import 'package:smart_mall/pages/mall/goods/goods_details_screen.dart';
+import 'package:smart_mall/pages/mall/goods_details/goods_details_screen.dart';
+
 import 'package:smart_mall/pages/my/src/goods_widget.dart';
 
 class WantScreen extends StatefulWidget {

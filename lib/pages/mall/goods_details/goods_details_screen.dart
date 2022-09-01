@@ -2,9 +2,9 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smart_mall/constants/theme.dart';
-import 'package:smart_mall/pages/mall/goods/goods_details_bottom_window.dart';
-import 'package:smart_mall/pages/mall/goods/goods_details_card.dart';
-import 'package:smart_mall/pages/mall/goods/recency_buy_card.dart';
+import 'package:smart_mall/pages/mall/goods_details/goods_details_bottom_window.dart';
+import 'package:smart_mall/pages/mall/goods_details/goods_details_card.dart';
+import 'package:smart_mall/pages/mall/goods_details/recency_buy_card.dart';
 
 class GoodsDetailsScreen extends StatefulWidget {
   const GoodsDetailsScreen({Key? key}) : super(key: key);
