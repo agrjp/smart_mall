@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:smart_mall/constants/mall_second_top_bar_list.dart';
 
 class MallSecondTab extends StatefulWidget {
   const MallSecondTab({Key? key}) : super(key: key);
@@ -46,7 +47,10 @@ class _MallSecondTabState extends State<MallSecondTab> {
                                   height: 50,
                                   fit: BoxFit.fill,
                                 ),
-                                const Text("品牌专区")
+                                Text(
+                                  SecondTopBarList.labelList[index],
+                                  style: const TextStyle(fontSize: 12),
+                                )
                               ],
                             );
                           })),
@@ -69,7 +73,10 @@ class _MallSecondTabState extends State<MallSecondTab> {
                                   height: 50,
                                   fit: BoxFit.fill,
                                 ),
-                                const Text("品牌专区")
+                                Text(
+                                  SecondTopBarList.labelList[index],
+                                  style: const TextStyle(fontSize: 12),
+                                )
                               ],
                             );
                           })),

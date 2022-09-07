@@ -1,7 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:smart_mall/entity/buy.dart';
+import 'package:smart_mall/entity/goods.dart';
+import 'package:smart_mall/network/easy_http.dart';
 
-class GoodsDetailsCard extends StatelessWidget {
-  const GoodsDetailsCard({Key? key}) : super(key: key);
+class GoodsDetailsCard extends StatefulWidget {
+  const GoodsDetailsCard({Key? key, required this.goods}) : super(key: key);
+  final Goods goods;
+  @override
+  State<GoodsDetailsCard> createState() => _GoodsDetailsCardState();
+}
+
+class _GoodsDetailsCardState extends State<GoodsDetailsCard> {
+  List<Buy> _buyList = [];
+  @override
+  void initState() {
+    super.initState();
+    EasyHttp.instance.selectBuyByGoodsId(widget.goods.id).then((value) {
+      setState(() {
+        _buyList = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +34,13 @@ class GoodsDetailsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            children: const [
+            children: [
               Text(
-                "¥${399}",
+                "¥${widget.goods.price}",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               Expanded(child: SizedBox()),
-              Text("1.2万+付款",
+              Text(_buyList.length.toString() + "人付款",
                   style: TextStyle(fontSize: 11, color: Colors.grey)),
               Padding(
                   padding: EdgeInsets.only(left: 10),
@@ -36,10 +55,10 @@ class GoodsDetailsCard extends StatelessWidget {
               style: TextStyle(fontSize: 12),
             ),
           ),
-          const Text(
-            "Nike Team Hustle D 8 JDI(GS)黑白红#送礼推荐",
-            style:
-                TextStyle(fontSize: 18, color: Color.fromARGB(255, 95, 93, 93)),
+          Text(
+            widget.goods.name,
+            style: const TextStyle(
+                fontSize: 18, color: Color.fromARGB(255, 95, 93, 93)),
           )
         ],
       ),

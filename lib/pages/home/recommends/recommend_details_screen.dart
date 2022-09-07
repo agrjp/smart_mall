@@ -1,32 +1,46 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:smart_mall/entity/comment.dart';
+import 'package:smart_mall/entity/content.dart';
+import 'package:smart_mall/entity/user.dart';
+import 'package:smart_mall/network/easy_http.dart';
 import 'package:smart_mall/pages/home/recommends/src/recommend_details_top_bar.dart';
+import 'package:smart_mall/util/data_util.dart';
 import 'package:smart_mall/widget/comment_widget.dart';
 import 'package:smart_mall/widget/others/swiper_indicator.dart';
 
 class RecommendDetailsScreen extends StatefulWidget {
-  const RecommendDetailsScreen({Key? key}) : super(key: key);
-
+  const RecommendDetailsScreen(
+      {Key? key, required this.user, required this.content})
+      : super(key: key);
+  final User user;
+  final Content content;
   @override
   State<RecommendDetailsScreen> createState() => _RecommendDetailsScreenState();
 }
 
 class _RecommendDetailsScreenState extends State<RecommendDetailsScreen> {
-  final List<String> _list = [];
   int _swiperIndicatorIndex = 0;
-
+  List<Comment> _commentList = [];
+  int likes = 0;
   @override
   void initState() {
     super.initState();
-    _list.add(
-        "https://evaluate-duck-1303322291.cos.ap-guangzhou.myqcloud.com/user-picture%2FWechatIMG85.jpeg");
-
-    _list.add(
-        "https://evaluate-duck-1303322291.cos.ap-guangzhou.myqcloud.com/user-picture%2FWechatIMG86.jpeg");
-
-    _list.add(
-        "https://evaluate-duck-1303322291.cos.ap-guangzhou.myqcloud.com/user-picture%2FWechatIMG87.jpeg");
+    EasyHttp.instance
+        .selectCommentByContentId(widget.content.contentId)
+        .then((value) {
+      setState(() {
+        _commentList = value;
+      });
+    });
+    EasyHttp.instance
+        .selectContentLikes(widget.content.contentId)
+        .then((value) {
+      setState(() {
+        likes = value;
+      });
+    });
   }
 
   @override
@@ -40,11 +54,13 @@ class _RecommendDetailsScreenState extends State<RecommendDetailsScreen> {
               width: double.infinity,
               child: Stack(
                 children: [
-                  const Align(
+                  Align(
                     alignment: Alignment.topCenter,
                     child: Padding(
-                      padding: EdgeInsets.only(left: 16, right: 16),
-                      child: RecommendDetailsTopBar(),
+                      padding: const EdgeInsets.only(left: 16, right: 16),
+                      child: RecommendDetailsTopBar(
+                        user: widget.user,
+                      ),
                     ),
                   ),
                   //top 38是因为 RecommendDetailsTopBar 大概38
@@ -65,11 +81,11 @@ class _RecommendDetailsScreenState extends State<RecommendDetailsScreen> {
                                   itemWidth: double.infinity,
                                   itemHeight: double.infinity,
                                   autoplay: true,
-                                  itemCount: _list.length,
+                                  itemCount: widget.content.photos.length,
                                   duration: 500,
                                   itemBuilder: (context, index) =>
                                       Image.network(
-                                    _list[index],
+                                    "http://${widget.content.photos[index]}",
                                     width: double.infinity,
                                     height: double.infinity,
                                     fit: BoxFit.fill,
@@ -85,7 +101,7 @@ class _RecommendDetailsScreenState extends State<RecommendDetailsScreen> {
                                   padding:
                                       const EdgeInsets.only(top: 8, bottom: 8),
                                   child: SwiperIndicator(
-                                    itemCount: _list.length,
+                                    itemCount: widget.content.photos.length,
                                     index: _swiperIndicatorIndex,
                                   )),
                               Padding(
@@ -95,21 +111,20 @@ class _RecommendDetailsScreenState extends State<RecommendDetailsScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "蒂芙尼配色AJ312 Low",
-                                      style: TextStyle(
+                                      widget.content.title,
+                                      style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    SizedBox(height: 8),
-                                    Text(
-                                        "Low蒂芙尼配色AJ312 Low蒂芙蒂芙尼配色AJ312 Low蒂芙尼配色AJ312 Low蒂芙尼配色AJ312 Low蒂芙尼配色AJ312 Low蒂芙尼配色AJ312 Low蒂芙尼配色AJ312 Low蒂芙尼配色AJ312 Low蒂芙尼配色AJ312 Low蒂芙尼配色AJ312 Low蒂芙尼配色AJ312 Low"),
+                                    const SizedBox(height: 8),
+                                    Text(widget.content.text),
                                     Container(
                                       width: MediaQuery.of(context).size.width *
                                           0.6,
                                       height: 45,
-                                      margin:
-                                          EdgeInsets.only(top: 6, bottom: 6),
-                                      padding: EdgeInsets.all(5),
+                                      margin: const EdgeInsets.only(
+                                          top: 6, bottom: 6),
+                                      padding: const EdgeInsets.all(5),
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           border: Border.all(
@@ -119,12 +134,12 @@ class _RecommendDetailsScreenState extends State<RecommendDetailsScreen> {
                                       child: Row(
                                         children: [
                                           Image.network(
-                                            _list[0],
+                                            widget.user.picture,
                                             width: 40,
                                             height: 40,
                                             fit: BoxFit.fill,
                                           ),
-                                          Expanded(
+                                          const Expanded(
                                               child: Padding(
                                                   padding:
                                                       EdgeInsets.only(left: 8),
@@ -141,11 +156,12 @@ class _RecommendDetailsScreenState extends State<RecommendDetailsScreen> {
                                     Align(
                                       alignment: Alignment.centerRight,
                                       child: Padding(
-                                          padding: EdgeInsets.only(
+                                          padding: const EdgeInsets.only(
                                               left: 12, right: 12),
                                           child: Text(
-                                            "2022-8-30 10:31 发布",
-                                            style: TextStyle(
+                                            DateUtil.fromUtc(
+                                                widget.content.time),
+                                            style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.grey),
                                           )),
@@ -153,13 +169,14 @@ class _RecommendDetailsScreenState extends State<RecommendDetailsScreen> {
                                     Container(
                                       width: double.infinity,
                                       height: 0.6,
-                                      color: Color.fromARGB(255, 235, 235, 235),
-                                      margin:
-                                          EdgeInsets.only(top: 6, bottom: 6),
+                                      color: const Color.fromARGB(
+                                          255, 235, 235, 235),
+                                      margin: const EdgeInsets.only(
+                                          top: 6, bottom: 6),
                                     ),
                                     Text(
-                                      "8条评论",
-                                      style: TextStyle(
+                                      "共${_commentList.length}条评论",
+                                      style: const TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -174,13 +191,15 @@ class _RecommendDetailsScreenState extends State<RecommendDetailsScreen> {
                                               shrinkWrap: true,
                                               physics:
                                                   const NeverScrollableScrollPhysics(),
-                                              itemCount: 10,
+                                              itemCount: _commentList.length,
                                               itemBuilder: (content, index) {
-                                                return const CommentWidget();
+                                                return CommentWidget(
+                                                  comment: _commentList[index],
+                                                );
                                               })),
                                     ),
                                     //底部加一个 sizebox 解决被底部的评论框挡住的问题
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 85,
                                     )
                                   ],
@@ -217,7 +236,7 @@ class _RecommendDetailsScreenState extends State<RecommendDetailsScreen> {
                                     width: 16,
                                     height: 16,
                                   ),
-                                  Padding(
+                                  const Padding(
                                       padding: EdgeInsets.only(left: 6),
                                       child: Text(
                                         "来都来的，说两句",
@@ -237,13 +256,14 @@ class _RecommendDetailsScreenState extends State<RecommendDetailsScreen> {
                                   height: 20,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 2),
-                                  child: Text("59"),
+                                  padding: const EdgeInsets.only(top: 2),
+                                  child: Text(likes.toString()),
                                 )
                               ],
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 26, right: 26),
+                              padding:
+                                  const EdgeInsets.only(left: 26, right: 26),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -253,8 +273,8 @@ class _RecommendDetailsScreenState extends State<RecommendDetailsScreen> {
                                     height: 20,
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(top: 2),
-                                    child: Text("12"),
+                                    padding: const EdgeInsets.only(top: 2),
+                                    child: Text(_commentList.length.toString()),
                                   )
                                 ],
                               ),

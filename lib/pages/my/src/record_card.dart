@@ -26,7 +26,7 @@ class _RecordCardState extends State<RecordCard> {
                   child: const RecordCardItem(
                     svgPath: "assets/svg/svg_collection.svg",
                     label: "想要",
-                    count: 19,
+                    count: -1,
                   ),
                   onTap: () {
                     Navigator.push(
@@ -60,7 +60,7 @@ class _RecordCardState extends State<RecordCard> {
                     child: RecordCardItem(
                   svgPath: "assets/svg/svg_footprint.svg",
                   label: "足迹",
-                  count: 12,
+                  count: -1,
                 )),
                 Container(
                   width: 1,
@@ -72,7 +72,7 @@ class _RecordCardState extends State<RecordCard> {
                     child: RecordCardItem(
                   svgPath: "assets/svg/svg_subscribe.svg",
                   label: "订阅",
-                  count: 10,
+                  count: -1,
                 ))
               ],
             )

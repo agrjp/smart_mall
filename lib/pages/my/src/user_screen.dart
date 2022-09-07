@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smart_mall/constants/theme.dart';
+import 'package:smart_mall/constants/user_Info.dart';
+import 'package:smart_mall/entity/content.dart';
+import 'package:smart_mall/network/easy_http.dart';
+import 'package:smart_mall/pages/home/recommends/recommend_details_screen.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({Key? key}) : super(key: key);
@@ -12,8 +16,9 @@ class UserScreen extends StatefulWidget {
 class _UserScreenState extends State<UserScreen> {
   List<bool> tabSelectList = [true, false, false];
   final PageController _controller = PageController();
-  String testPic =
-      "https://evaluate-duck-1303322291.cos.ap-guangzhou.myqcloud.com/user-picture%2Ftest_pic.png";
+  int careOther = 0;
+  int mFans = 0;
+  List<Content> contentList = [];
   tabSelect(int index) {
     for (int i = 0; i < tabSelectList.length; i++) {
       if (index != i) {
@@ -27,6 +32,23 @@ class _UserScreenState extends State<UserScreen> {
   @override
   void initState() {
     super.initState();
+    EasyHttp.instance.selectCareList().then((value) {
+// ignore: unused_local_variable
+      for (var element in value) {
+        if (element.userId == UserInfo.user.uuid) {
+          mFans = mFans + 1;
+        }
+        if (element.otherId == UserInfo.user.uuid) {
+          careOther = careOther + 1;
+        }
+      }
+      setState(() {});
+    });
+    EasyHttp.instance.selectContentByUserId(UserInfo.user.uuid).then((value) {
+      setState(() {
+        contentList = value;
+      });
+    });
   }
 
   @override
@@ -72,7 +94,7 @@ class _UserScreenState extends State<UserScreen> {
                         children: [
                           ClipOval(
                             child: Image.network(
-                              testPic,
+                              UserInfo.user.picture,
                               width: 68,
                               height: 68,
                               fit: BoxFit.fill,
@@ -85,8 +107,8 @@ class _UserScreenState extends State<UserScreen> {
                                 children: [
                                   Row(
                                     children: [
-                                      const Text("谦和的黑椒汁Dmk",
-                                          style: TextStyle(
+                                      Text(UserInfo.user.userName,
+                                          style: const TextStyle(
                                               fontSize: 16,
                                               color: Colors.white)),
                                       SvgPicture.asset(
@@ -123,7 +145,7 @@ class _UserScreenState extends State<UserScreen> {
                       children: [
                         Column(
                           children: const [
-                            Text("0",
+                            Text("-1",
                                 style: TextStyle(
                                     fontSize: 15, color: Colors.white)),
                             Text("获赞与收藏",
@@ -134,21 +156,21 @@ class _UserScreenState extends State<UserScreen> {
                         Padding(
                             padding: const EdgeInsets.only(left: 15, right: 15),
                             child: Column(
-                              children: const [
-                                Text("0",
-                                    style: TextStyle(
+                              children: [
+                                Text(mFans.toString(),
+                                    style: const TextStyle(
                                         fontSize: 15, color: Colors.white)),
-                                Text("粉丝",
+                                const Text("粉丝",
                                     style: TextStyle(
                                         fontSize: 11, color: Colors.white))
                               ],
                             )),
                         Column(
-                          children: const [
-                            Text("0",
-                                style: TextStyle(
+                          children: [
+                            Text(careOther.toString(),
+                                style: const TextStyle(
                                     fontSize: 15, color: Colors.white)),
-                            Text("关注",
+                            const Text("关注",
                                 style: TextStyle(
                                     fontSize: 11, color: Colors.white))
                           ],
@@ -223,12 +245,33 @@ class _UserScreenState extends State<UserScreen> {
                       onPageChanged: (index) {
                         tabSelect(index);
                       },
-                      children: const [
-                        Center(
-                          child: Text("动态页 - 待完善"),
-                        ),
-                        Center(child: Text("收藏页 - 待完善")),
-                        Center(child: Text("赞过页 - 待完善"))
+                      children: [
+                        MediaQuery.removePadding(
+                            removeTop: true,
+                            context: context,
+                            child: ListView.builder(
+                                itemCount: contentList.length,
+                                itemBuilder: ((context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 6, bottom: 6, left: 10, right: 10),
+                                    child: GestureDetector(
+                                      child: Text(contentList[index].title),
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    RecommendDetailsScreen(
+                                                        user: UserInfo.user,
+                                                        content: contentList[
+                                                            index]))));
+                                      },
+                                    ),
+                                  );
+                                }))),
+                        const Center(child: Text("收藏页 - 待完善")),
+                        const Center(child: Text("赞过页 - 待完善"))
                       ],
                     )))
           ],

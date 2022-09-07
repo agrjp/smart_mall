@@ -1,10 +1,9 @@
-import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:smart_mall/constants/theme.dart';
 import 'package:smart_mall/pages/mall/src/mall_pageview_widget.dart';
-import 'package:smart_mall/pages/mall/src/mall_second_tab.dart';
+
 import 'package:smart_mall/pages/mall/src/mall_tob_tab.dart';
 
 class MallScreen extends StatefulWidget {
@@ -81,19 +80,11 @@ class _MallScreenState extends State<MallScreen> {
                     });
                   },
                   children: const [
-                    MallPageViewWidget(),
-                    Center(
-                      child: Text("鞋类"),
-                    ),
-                    Center(
-                      child: Text("潮服"),
-                    ),
-                    Center(
-                      child: Text("手表"),
-                    ),
-                    Center(
-                      child: Text("包装"),
-                    )
+                    MallPageViewWidget(type: "推荐"),
+                    MallPageViewWidget(type: "鞋类"),
+                    MallPageViewWidget(type: "潮服"),
+                    MallPageViewWidget(type: "手表"),
+                    MallPageViewWidget(type: "电脑"),
                   ],
                 ))
               ],

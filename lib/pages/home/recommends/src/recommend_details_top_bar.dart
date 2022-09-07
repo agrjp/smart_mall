@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:smart_mall/entity/user.dart';
 
 class RecommendDetailsTopBar extends StatefulWidget {
-  const RecommendDetailsTopBar({Key? key}) : super(key: key);
-
+  const RecommendDetailsTopBar({Key? key, required this.user})
+      : super(key: key);
+  final User user;
   @override
   State<RecommendDetailsTopBar> createState() => _RecommendDetailsTopBarState();
 }
 
 class _RecommendDetailsTopBarState extends State<RecommendDetailsTopBar> {
-  String testImageUrl =
-      "https://evaluate-duck-1303322291.cos.ap-guangzhou.myqcloud.com/user-picture%2Ftest_pic.png";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,7 +31,7 @@ class _RecommendDetailsTopBarState extends State<RecommendDetailsTopBar> {
               padding: const EdgeInsets.only(left: 5, right: 10),
               child: ClipOval(
                   child: Image.network(
-                testImageUrl,
+                widget.user.picture,
                 width: 30,
                 height: 30,
                 fit: BoxFit.fill,
@@ -41,8 +41,9 @@ class _RecommendDetailsTopBarState extends State<RecommendDetailsTopBar> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                "jiaaang",
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                widget.user.userName,
+                style:
+                    const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
               ),
               Padding(
                   padding: const EdgeInsets.only(top: 3),

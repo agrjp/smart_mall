@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:smart_mall/entity/comment.dart';
+import 'package:smart_mall/entity/user.dart';
+import 'package:smart_mall/network/easy_http.dart';
+import 'package:smart_mall/util/data_util.dart';
 
 class CommentWidget extends StatefulWidget {
-  const CommentWidget({Key? key}) : super(key: key);
-
+  const CommentWidget({Key? key, required this.comment}) : super(key: key);
+  final Comment comment;
   @override
   State<CommentWidget> createState() => _CommentWidgetState();
 }
 
 class _CommentWidgetState extends State<CommentWidget> {
-  String testImageUrl =
-      "https://evaluate-duck-1303322291.cos.ap-guangzhou.myqcloud.com/user-picture%2Ftest_pic.png";
+  User _user = User();
+  @override
+  void initState() {
+    super.initState();
+    EasyHttp.instance.selectUserById(widget.comment.userId).then((value) {
+      setState(() {
+        _user = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +30,7 @@ class _CommentWidgetState extends State<CommentWidget> {
       children: [
         ClipOval(
             child: Image.network(
-          testImageUrl,
+          _user.picture,
           width: 32,
           height: 32,
           fit: BoxFit.fill,
@@ -28,20 +40,20 @@ class _CommentWidgetState extends State<CommentWidget> {
           padding: const EdgeInsets.only(left: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                "jiaaang",
-                style: TextStyle(fontSize: 15, color: Colors.grey),
+                _user.userName,
+                style: const TextStyle(fontSize: 15, color: Colors.grey),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 2, bottom: 2),
-                child: Text("穿多久了,麻烦问一下穿多久了,麻烦问一下"),
+                padding: const EdgeInsets.only(top: 2, bottom: 2),
+                child: Text(widget.comment.text),
               ),
               Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    "6天前",
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                    DateUtil.fromUtc(widget.comment.time),
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
                   ))
             ],
           ),

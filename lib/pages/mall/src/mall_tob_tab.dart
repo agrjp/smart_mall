@@ -16,8 +16,7 @@ class _MallTobTabState extends State<MallTobTab> {
     _labelList.add("鞋类");
     _labelList.add("潮服");
     _labelList.add("手表");
-    _labelList.add("包装");
-    _labelList.add("配饰");
+    _labelList.add("电脑");
     _labelList.add("美妆");
     _labelList.add("首饰");
     _labelList.add("箱子");

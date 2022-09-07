@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:smart_mall/constants/user_Info.dart';
+import 'package:smart_mall/network/easy_http.dart';
+
 import 'package:smart_mall/pages/home/home_screen.dart';
 import 'package:smart_mall/pages/mall/mall_screen.dart';
 import 'package:smart_mall/pages/my/my_screen.dart';
@@ -22,6 +25,12 @@ class _MainScreenState extends State<MainScreen> {
     _listScreen.add(const HomeScreen());
     _listScreen.add(const MallScreen());
     _listScreen.add(const MyScreen());
+    EasyHttp.instance
+        .selectUserByTelephone(UserInfo.userTelephone)
+        .then((value) {
+      UserInfo.user = value;
+      UserInfo.isLogin = true;
+    });
   }
 
   @override

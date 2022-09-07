@@ -84,11 +84,11 @@ class _WantScreenState extends State<WantScreen> {
                                 child: GestureDetector(
                                   child: const GoodsWidget(),
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: ((context) =>
-                                                const GoodsDetailsScreen())));
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: ((context) =>
+                                    //             const GoodsDetailsScreen())));
                                   },
                                 ),
                               );
