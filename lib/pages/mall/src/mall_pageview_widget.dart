@@ -1,11 +1,8 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:smart_mall/entity/buy.dart';
 import 'package:smart_mall/entity/goods.dart';
 import 'package:smart_mall/network/easy_http.dart';
 
-import 'package:smart_mall/pages/mall/goods_details/goods_details_screen.dart';
 import 'package:smart_mall/pages/mall/src/goods_list_view.dart';
 import 'package:smart_mall/pages/mall/src/mall_second_tab.dart';
 
@@ -17,22 +14,16 @@ class MallPageViewWidget extends StatefulWidget {
 }
 
 class _MallPageViewWidgetState extends State<MallPageViewWidget> {
-  final String testPic =
-      "https://evaluate-duck-1303322291.cos.ap-guangzhou.myqcloud.com/user-picture/WechatIMG95.jpeg";
   List<Goods> _goodsList = [];
-  List<Buy> _buyList = [];
   final List<String> _bannerList = [];
   @override
   void initState() {
     super.initState();
-    _bannerList.add(
-        "https://evaluate-duck-1303322291.cos.ap-guangzhou.myqcloud.com/user-picture%2FWechatIMG85.jpeg");
+    _bannerList.add("http://192.168.0.108:8080/top2/top2_1.jpg");
 
-    _bannerList.add(
-        "https://evaluate-duck-1303322291.cos.ap-guangzhou.myqcloud.com/user-picture%2FWechatIMG86.jpeg");
+    _bannerList.add("http://192.168.0.108:8080/top2/top2_2.jpg");
 
-    _bannerList.add(
-        "https://evaluate-duck-1303322291.cos.ap-guangzhou.myqcloud.com/user-picture%2FWechatIMG87.jpeg");
+    _bannerList.add("http://192.168.0.108:8080/top2/top2_3.jpg");
     super.initState();
 
     EasyHttp.instance.selectGoodsByType(widget.type).then((value) {

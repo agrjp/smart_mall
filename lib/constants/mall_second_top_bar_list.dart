@@ -11,4 +11,16 @@ class SecondTopBarList {
     "北面热销",
     "校园学生鞋"
   ];
+  static List<String> imageList = [
+    "http://192.168.0.108:8080/top1/top1_1.jpg",
+    "http://192.168.0.108:8080/top1/top1_2.jpg",
+    "http://192.168.0.108:8080/top1/top1_3.jpg",
+    "http://192.168.0.108:8080/top1/top1_4.jpg",
+    "http://192.168.0.108:8080/top1/top1_5.jpg",
+    "http://192.168.0.108:8080/top1/top1_6.jpg",
+    "http://192.168.0.108:8080/top1/top1_7.jpg",
+    "http://192.168.0.108:8080/top1/top1_8.jpg",
+    "http://192.168.0.108:8080/top1/top1_9.jpg",
+    "http://192.168.0.108:8080/top1/top1_10.jpg"
+  ];
 }

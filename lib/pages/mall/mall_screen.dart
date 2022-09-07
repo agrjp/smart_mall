@@ -16,8 +16,6 @@ class MallScreen extends StatefulWidget {
 class _MallScreenState extends State<MallScreen> {
   final List<String> _list = [];
   int _pageViewIndex = 0;
-  final String testPic =
-      "https://evaluate-duck-1303322291.cos.ap-guangzhou.myqcloud.com/user-picture/WechatIMG95.jpeg";
 
   @override
   void initState() {

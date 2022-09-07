@@ -42,7 +42,7 @@ class _MallSecondTabState extends State<MallSecondTab> {
                             return Column(
                               children: [
                                 Image.network(
-                                  testPic,
+                                  SecondTopBarList.imageList[index],
                                   width: 50,
                                   height: 50,
                                   fit: BoxFit.fill,
@@ -68,7 +68,7 @@ class _MallSecondTabState extends State<MallSecondTab> {
                             return Column(
                               children: [
                                 Image.network(
-                                  testPic,
+                                  SecondTopBarList.imageList[index],
                                   width: 50,
                                   height: 50,
                                   fit: BoxFit.fill,
