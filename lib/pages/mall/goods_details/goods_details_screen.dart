@@ -171,7 +171,7 @@ class _GoodsDetailsScreenState extends State<GoodsDetailsScreen> {
                             showModalBottomSheet(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return const GoodsDetailBottomWindow();
+                                  return GoodsDetailBottomWindow(goods: widget.goods);
                                 },
                                 backgroundColor: Colors.transparent);
                           },

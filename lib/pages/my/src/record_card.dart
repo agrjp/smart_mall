@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:smart_mall/pages/my/my_footprints/footprint_screen.dart';
 import 'package:smart_mall/pages/my/src/want_screen.dart';
 
 class RecordCard extends StatefulWidget {
@@ -56,12 +57,20 @@ class _RecordCardState extends State<RecordCard> {
             ),
             Row(
               children: [
-                const Expanded(
-                    child: RecordCardItem(
-                  svgPath: "assets/svg/svg_footprint.svg",
-                  label: "足迹",
-                  count: -1,
-                )),
+                Expanded(
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => const FootprintsScreen())));
+                      },
+                      child: RecordCardItem(
+                        svgPath: "assets/svg/svg_footprint.svg",
+                        label: "足迹",
+                        count: -1,
+                      ),
+                    )),
                 Container(
                   width: 1,
                   height: 26,

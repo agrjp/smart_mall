@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:smart_mall/entity/goods.dart';
+import 'package:smart_mall/pages/my/pay/pay_page.dart';
 
 class GoodsDetailBottomWindow extends StatefulWidget {
-  const GoodsDetailBottomWindow({Key? key}) : super(key: key);
-
+  const GoodsDetailBottomWindow({Key? key,required this.goods}) : super(key: key);
+  final Goods goods;
   @override
   State<GoodsDetailBottomWindow> createState() =>
       _GoodsDetailBottomWindowState();
@@ -27,7 +29,7 @@ class _GoodsDetailBottomWindowState extends State<GoodsDetailBottomWindow> {
             children: [
               Container(
                 child: Image.network(
-                  testImageUrl,
+                  "http://${widget.goods.photos[0]}",
                   width: 50,
                   height: 50,
                   fit: BoxFit.fill,
@@ -35,7 +37,7 @@ class _GoodsDetailBottomWindowState extends State<GoodsDetailBottomWindow> {
               ),
               const Padding(padding: EdgeInsets.only(left: 10)),
               Text(
-                "¥2339",
+                "￥"+widget.goods.price.toString(),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               )
             ],
@@ -46,39 +48,47 @@ class _GoodsDetailBottomWindowState extends State<GoodsDetailBottomWindow> {
           Row(
             children: [
               Expanded(
-                  child: Container(
-                height: 60,
-                margin: const EdgeInsets.only(left: 10),
-                decoration: const BoxDecoration(
-                    color: Color.fromARGB(255, 10, 198, 198),
-                    borderRadius: BorderRadius.all(Radius.circular(3))),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "¥2499",
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => PayPage(goods: widget.goods))));
+                    },
+                    child: Container(
+                      height: 60,
+                      margin: const EdgeInsets.only(left: 10),
+                      decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 10, 198, 198),
+                          borderRadius: BorderRadius.all(Radius.circular(3))),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                           Text(
+                             "￥"+widget.goods.price.toString(),
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(left: 3, right: 3),
+                            width: 1,
+                            height: 13,
+                            color: Colors.grey,
+                          ),
+                          const Text(
+                            "约2天到",
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Color.fromARGB(255, 246, 246, 246),
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 3, right: 3),
-                      width: 1,
-                      height: 13,
-                      color: Colors.grey,
-                    ),
-                    const Text(
-                      "约2天到",
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Color.fromARGB(255, 246, 246, 246),
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-              )),
+                  )),
               Expanded(
                   child: Container(
                 height: 60,
@@ -90,8 +100,8 @@ class _GoodsDetailBottomWindowState extends State<GoodsDetailBottomWindow> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "¥2339",
+                    Text(
+                      "￥"+(widget.goods.price-110).toString(),
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,

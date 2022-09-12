@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:smart_mall/constants/callback.dart';
 import 'package:smart_mall/constants/user_Info.dart';
 import 'package:smart_mall/entity/buy.dart';
 import 'package:smart_mall/network/easy_http.dart';
+import 'package:smart_mall/pages/my/buy_details/buy_card_details_screen.dart';
 
 class BuyCard extends StatefulWidget {
   const BuyCard({Key? key}) : super(key: key);
@@ -60,30 +62,74 @@ class _BuyCardState extends State<BuyCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              BuyCardItem(
-                label: "已签收",
-                svgPath: "assets/svg/svg_sign_for.svg",
-                count: signForCount,
-                isShowCount: false,
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => const BuyDetailsScreen(
+                             index: 0,
+                          )
+                          )));
+                },
+                child: BuyCardItem(
+                  label: "已签收",
+                  svgPath: "assets/svg/svg_sign_for.svg",
+                  count: signForCount,
+                  isShowCount: false,
+                ),
               ),
-              BuyCardItem(
-                label: "待发货",
-                svgPath: "assets/svg/svg_deliver_goods.svg",
-                count: deliverGoodsCount,
-                isShowCount: true,
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => const BuyDetailsScreen(
+                            index: 1,
+                          )
+                          )));
+                },
+                child: BuyCardItem(
+                  label: "待发货",
+                  svgPath: "assets/svg/svg_deliver_goods.svg",
+                  count: deliverGoodsCount,
+                  isShowCount: true,
+                ),
               ),
-              BuyCardItem(
-                label: "待收货",
-                svgPath: "assets/svg/svg_receiving.svg",
-                count: deliverGoodsCount,
-                isShowCount: true,
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => const BuyDetailsScreen(
+                            index: 2,
+                          )
+                          )));
+                },
+                child: BuyCardItem(
+                  label: "待收货",
+                  svgPath: "assets/svg/svg_receiving.svg",
+                  count: deliverGoodsCount,
+                  isShowCount: true,
+                ),
               ),
-              const BuyCardItem(
-                label: "售后",
-                svgPath: "assets/svg/svg_after_sales.svg",
-                count: 0,
-                isShowCount: false,
-              )
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => const BuyDetailsScreen(
+                            index: 3,
+                          )
+                          )));
+                },
+                child: const BuyCardItem(
+                  label: "售后",
+                  svgPath: "assets/svg/svg_after_sales.svg",
+                  count: 0,
+                  isShowCount: false,
+                ),
+              ),
             ],
           ),
           Container(

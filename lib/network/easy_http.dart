@@ -77,6 +77,26 @@ class EasyHttp {
     return list;
   }
 
+  Future<Goods> selectGoodsByGoodsId(int id) async {
+    Goods good = Goods();
+    await Http.instance.get("commodity", {"id": id}).then((value) {
+      Map<String, dynamic> responseMap = json.decode(value.toString());
+      good = Goods.fromJson(responseMap);
+    });
+    return good;
+  }
+
+  Future<List<Goods>> selectGoodsByIDAndStatus(String status,int userId) async {
+    List<Goods> list = [];
+    await Http.instance.get("searchLogistics", {"logistics": status,"id":userId}).then((value) {
+      List<dynamic> responseList = json.decode(value.toString());
+      for (var m in responseList) {
+        list.add(Goods.fromJson(m));
+      }
+    });
+    return list;
+  }
+
 //comment
   Future<List<Comment>> selectCommentByContentId(int id) async {
     List<Comment> list = [];
@@ -124,5 +144,10 @@ class EasyHttp {
       }
     });
     return list;
+  }
+
+  //order
+  postOrderData(int userID,int goodID) async{
+    await Http.instance.post("buyCommodity", {"userId":userID , "commodityId":goodID});
   }
 }
